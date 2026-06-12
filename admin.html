@@ -6,51 +6,94 @@
   <title>Admin - BookBot</title>
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-  <div class="app-shell">
-    <header class="topbar">
-      <div>
-        <p class="eyebrow">Admin page</p>
-        <h1>BookBot Admin</h1>
-      </div>
-      <nav class="nav-actions" aria-label="Admin navigation">
-        <a class="nav-link" href="library.html?from=admin">View User Library</a>
-        <button class="nav-button" id="logoutButton" type="button">Log Out</button>
+<body class="admin-page">
+  <div class="admin-console">
+    <aside class="admin-sidebar" aria-label="Admin sidebar">
+      <a class="admin-brand" href="admin.html">
+        <span class="admin-brand-mark">B</span>
+        <span>
+          <strong>BookBot</strong>
+          <small>Admin Console</small>
+        </span>
+      </a>
+
+      <nav class="admin-side-nav" aria-label="Admin navigation">
+        <a class="active" href="admin.html">Library Ops</a>
+        <a href="library.html?from=admin">Reader View</a>
       </nav>
-    </header>
 
-    <main class="admin-layout">
-      <section class="panel" aria-labelledby="uploadTitle">
-        <div class="section-heading">
-          <div>
-            <p class="section-kicker">Uploads</p>
-            <h2 id="uploadTitle">Upload Books</h2>
-          </div>
-          <span class="book-count" id="bookCount">0 books</span>
+      <div class="admin-sidebar-note">
+        <span>Local prototype</span>
+        <p>Books, chunks, and accounts live in this browser using IndexedDB.</p>
+      </div>
+    </aside>
+
+    <div class="admin-main">
+      <header class="admin-commandbar">
+        <div>
+          <p class="eyebrow">Admin workspace</p>
+          <h1>Library Operations</h1>
+          <p class="admin-lead">Publish PDF books, inspect extracted chunks, and manage the reader library.</p>
         </div>
-
-        <label class="drop-zone" for="bookUpload" id="dropZone">
-          <input id="bookUpload" type="file" accept="application/pdf,.pdf" multiple>
-          <span class="drop-title">Select PDF books</span>
-          <span class="drop-meta">Upload PDF books for readers</span>
-        </label>
-
-        <button class="primary" id="uploadButton" type="button">Upload Books</button>
-        <button class="danger ghost full-width" id="clearDatabaseButton" type="button">Clear Book Database</button>
-        <div class="status-line" id="uploadStatus" role="status" aria-live="polite"></div>
-      </section>
-
-      <section class="panel" aria-labelledby="adminLibraryTitle">
-        <div class="section-heading">
-          <div>
-            <p class="section-kicker">Library control</p>
-            <h2 id="adminLibraryTitle">Uploaded Books</h2>
-          </div>
+        <div class="admin-command-actions">
+          <a class="nav-link" href="library.html?from=admin">View User Library</a>
+          <button class="nav-button" id="logoutButton" type="button">Log Out</button>
         </div>
-        <div class="empty-state" id="libraryEmpty">No books uploaded.</div>
-        <ul class="book-list" id="bookList"></ul>
-      </section>
-    </main>
+      </header>
+
+      <main class="admin-dashboard-v2">
+        <section class="admin-hero-panel" aria-labelledby="uploadTitle">
+          <div class="admin-hero-copy">
+            <p class="section-kicker">Upload pipeline</p>
+            <h2 id="uploadTitle">Add books to the reader shelf</h2>
+            <p>Drop one or more PDFs. BookBot extracts page text, chunks it for retrieval, and stores everything locally.</p>
+          </div>
+
+          <label class="drop-zone admin-drop-zone-v2" for="bookUpload" id="dropZone">
+            <input id="bookUpload" type="file" accept="application/pdf,.pdf" multiple>
+            <span class="upload-mark">PDF</span>
+            <span class="drop-title">Choose PDFs or drop them here</span>
+            <span class="drop-meta">Searchable chunks are created automatically after upload.</span>
+          </label>
+
+          <div class="selected-files" id="selectedFiles">No files selected.</div>
+
+          <div class="admin-actions-v2">
+            <button class="primary" id="uploadButton" type="button">Upload Books</button>
+            <button class="danger ghost" id="clearDatabaseButton" type="button">Clear Database</button>
+          </div>
+          <div class="status-line" id="uploadStatus" role="status" aria-live="polite"></div>
+        </section>
+
+        <section class="admin-stats-v2" aria-label="Library status">
+          <article>
+            <span>Books</span>
+            <strong id="bookCount">0 books</strong>
+          </article>
+          <article>
+            <span>Indexed chunks</span>
+            <strong id="chunkCount">0</strong>
+          </article>
+          <article>
+            <span>Latest upload</span>
+            <strong id="latestBook">None yet</strong>
+          </article>
+        </section>
+
+        <section class="admin-table-panel" aria-labelledby="adminLibraryTitle">
+          <div class="admin-table-header">
+            <div>
+              <p class="section-kicker">Library control</p>
+              <h2 id="adminLibraryTitle">Uploaded Books</h2>
+            </div>
+            <span class="admin-table-caption">Visible to readers immediately</span>
+          </div>
+
+          <div class="empty-state admin-empty" id="libraryEmpty">No books uploaded yet. Add PDFs to publish them to the user library.</div>
+          <ul class="admin-book-table" id="bookList"></ul>
+        </section>
+      </main>
+    </div>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>

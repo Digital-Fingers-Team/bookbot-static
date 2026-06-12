@@ -16,6 +16,9 @@
     const messages = buildOpenRouterMessages(question, usableContext);
 
     // OPENROUTER API INTEGRATION POINT
+    // Static browser pages cannot read .env files directly.
+    // Set this at runtime with:
+    // localStorage.setItem("BOOKBOT_OPENROUTER_API_KEY", "your_key_here")
     const OPENROUTER_API_KEY = localStorage.getItem("BOOKBOT_OPENROUTER_API_KEY") || "";
     const OPENROUTER_MODEL = "openai/gpt-4o-mini";
     const OPENROUTER_SITE_URL = "";

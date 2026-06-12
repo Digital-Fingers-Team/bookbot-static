@@ -28,6 +28,9 @@
     elements.uploadButton = document.getElementById("uploadButton");
     elements.uploadStatus = document.getElementById("uploadStatus");
     elements.bookCount = document.getElementById("bookCount");
+    elements.chunkCount = document.getElementById("chunkCount");
+    elements.latestBook = document.getElementById("latestBook");
+    elements.selectedFiles = document.getElementById("selectedFiles");
     elements.bookList = document.getElementById("bookList");
     elements.libraryEmpty = document.getElementById("libraryEmpty");
     elements.clearDatabaseButton = document.getElementById("clearDatabaseButton");
@@ -37,6 +40,7 @@
 
   function bindEvents() {
     elements.uploadButton.addEventListener("click", handleUpload);
+    elements.bookUpload.addEventListener("change", renderSelectedFiles);
     elements.clearDatabaseButton.addEventListener("click", handleClearDatabase);
     elements.bookList.addEventListener("click", handleBookListClick);
     elements.logoutButton.addEventListener("click", window.BookAuth.logOutUser);
@@ -54,6 +58,7 @@
       event.preventDefault();
       elements.dropZone.classList.remove("is-dragging");
       elements.bookUpload.files = event.dataTransfer.files;
+      renderSelectedFiles();
     });
   }
 
@@ -81,6 +86,7 @@
       }
 
       elements.bookUpload.value = "";
+      renderSelectedFiles();
       await refreshBooks();
       setStatus(elements.uploadStatus, "Books uploaded to the user library.", "success");
     } catch (error) {
@@ -138,24 +144,63 @@
   async function refreshBooks() {
     state.books = await window.BookBotDB.getBooks();
     elements.bookCount.textContent = formatBookCount(state.books.length);
+    elements.chunkCount.textContent = formatNumber(sumChunks(state.books));
+    elements.latestBook.textContent = getLatestBookLabel(state.books);
     elements.libraryEmpty.classList.toggle("hidden", state.books.length > 0);
     elements.bookList.innerHTML = "";
 
-    state.books.forEach((book) => {
+    state.books.forEach((book, index) => {
       const item = document.createElement("li");
-      item.className = "book-item";
+      item.className = "admin-table-row";
       item.innerHTML = `
-        <div>
-          <p class="book-name"></p>
-          <div class="book-meta"></div>
+        <div class="admin-book-cell admin-book-title-cell">
+          <span class="admin-book-index"></span>
+          <div>
+            <p class="book-name"></p>
+            <div class="book-meta">Ready for reader search</div>
+          </div>
         </div>
-        <button class="delete-book" type="button" data-delete-book="">Delete</button>
+        <div class="admin-book-cell">
+          <span class="admin-row-label">Pages</span>
+          <strong class="admin-page-count"></strong>
+        </div>
+        <div class="admin-book-cell">
+          <span class="admin-row-label">Chunks</span>
+          <strong class="admin-chunk-count"></strong>
+        </div>
+        <div class="admin-book-cell">
+          <span class="admin-row-label">Uploaded</span>
+          <strong class="admin-book-date"></strong>
+        </div>
+        <div class="admin-book-cell admin-book-actions">
+          <button class="delete-book" type="button" data-delete-book="">Delete</button>
+        </div>
       `;
 
+      item.querySelector(".admin-book-index").textContent = String(index + 1).padStart(2, "0");
       item.querySelector(".book-name").textContent = book.bookName;
-      item.querySelector(".book-meta").textContent = `${book.pageCount || 0} pages, ${book.chunkCount || 0} chunks`;
+      item.querySelector(".admin-page-count").textContent = book.pageCount || 0;
+      item.querySelector(".admin-chunk-count").textContent = book.chunkCount || 0;
+      item.querySelector(".admin-book-date").textContent = formatDate(book.createdAt);
       item.querySelector("[data-delete-book]").setAttribute("data-delete-book", book.bookId);
       elements.bookList.appendChild(item);
+    });
+  }
+
+  function renderSelectedFiles() {
+    const files = Array.from(elements.bookUpload.files || []);
+
+    if (files.length === 0) {
+      elements.selectedFiles.textContent = "No files selected.";
+      return;
+    }
+
+    elements.selectedFiles.innerHTML = "";
+    files.forEach((file) => {
+      const item = document.createElement("span");
+      item.className = "selected-file-pill";
+      item.textContent = file.name;
+      elements.selectedFiles.appendChild(item);
     });
   }
 
@@ -190,6 +235,33 @@
 
   function formatBookCount(count) {
     return `${count} book${count === 1 ? "" : "s"}`;
+  }
+
+  function sumChunks(books) {
+    return books.reduce((total, book) => total + (Number(book.chunkCount) || 0), 0);
+  }
+
+  function formatNumber(value) {
+    return new Intl.NumberFormat().format(value || 0);
+  }
+
+  function getLatestBookLabel(books) {
+    if (books.length === 0) {
+      return "None yet";
+    }
+
+    return books[books.length - 1].bookName.replace(/\.pdf$/i, "");
+  }
+
+  function formatDate(value) {
+    if (!value) {
+      return "";
+    }
+
+    return new Intl.DateTimeFormat(undefined, {
+      month: "short",
+      day: "numeric"
+    }).format(new Date(value));
   }
 
   function isPdf(file) {
