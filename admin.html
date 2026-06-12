@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - BookBot</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Admin page</p>
+        <h1>BookBot Admin</h1>
+      </div>
+      <nav class="nav-actions" aria-label="Admin navigation">
+        <a class="nav-link" href="library.html?from=admin">View User Library</a>
+        <button class="nav-button" id="logoutButton" type="button">Log Out</button>
+      </nav>
+    </header>
+
+    <main class="admin-layout">
+      <section class="panel" aria-labelledby="uploadTitle">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Uploads</p>
+            <h2 id="uploadTitle">Upload Books</h2>
+          </div>
+          <span class="book-count" id="bookCount">0 books</span>
+        </div>
+
+        <label class="drop-zone" for="bookUpload" id="dropZone">
+          <input id="bookUpload" type="file" accept="application/pdf,.pdf" multiple>
+          <span class="drop-title">Select PDF books</span>
+          <span class="drop-meta">Upload PDF books for readers</span>
+        </label>
+
+        <button class="primary" id="uploadButton" type="button">Upload Books</button>
+        <button class="danger ghost full-width" id="clearDatabaseButton" type="button">Clear Book Database</button>
+        <div class="status-line" id="uploadStatus" role="status" aria-live="polite"></div>
+      </section>
+
+      <section class="panel" aria-labelledby="adminLibraryTitle">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Library control</p>
+            <h2 id="adminLibraryTitle">Uploaded Books</h2>
+          </div>
+        </div>
+        <div class="empty-state" id="libraryEmpty">No books uploaded.</div>
+        <ul class="book-list" id="bookList"></ul>
+      </section>
+    </main>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/pdf.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

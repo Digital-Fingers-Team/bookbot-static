@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library - BookBot</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">User library</p>
+        <h1>BookBot Library</h1>
+      </div>
+      <nav class="nav-actions" aria-label="Library navigation">
+        <a class="nav-link admin-only hidden" id="adminLink" href="admin.html">Back to Admin</a>
+        <button class="nav-button" id="logoutButton" type="button">Log Out</button>
+      </nav>
+    </header>
+
+    <main class="view active" aria-labelledby="libraryTitle">
+      <div class="view-heading">
+        <div>
+          <p class="section-kicker">Browse</p>
+          <h2 id="libraryTitle">Available Books</h2>
+        </div>
+        <span class="book-count" id="bookCount">0 books</span>
+      </div>
+      <div class="empty-state" id="libraryEmpty">No books are available yet.</div>
+      <div class="library-grid" id="libraryGrid"></div>
+    </main>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/pdf.js"></script>
+  <script src="js/library.js"></script>
+</body>
+</html>

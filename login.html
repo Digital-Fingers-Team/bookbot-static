@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log In - BookBot</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="auth-shell">
+    <section class="auth-card" aria-labelledby="loginTitle">
+      <p class="eyebrow">BookBot</p>
+      <h1 id="loginTitle">Log in</h1>
+      <form class="auth-form" id="loginForm">
+        <label>
+          <span>Email</span>
+          <input id="emailInput" type="email" autocomplete="email" required>
+        </label>
+        <label>
+          <span>Password</span>
+          <input id="passwordInput" type="password" autocomplete="current-password" required>
+        </label>
+        <button class="primary" type="submit">Log In</button>
+      </form>
+      <div class="status-line" id="authStatus" role="status" aria-live="polite"></div>
+      <p class="auth-switch">No account? <a href="signup.html">Sign up</a></p>
+    </section>
+  </main>
+
+  <script src="js/db.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>

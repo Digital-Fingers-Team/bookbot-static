@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book - BookBot</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Read and chat</p>
+        <h1>BookBot</h1>
+      </div>
+      <nav class="nav-actions" aria-label="Book navigation">
+        <a class="nav-link" id="libraryLink" href="library.html">Library</a>
+        <a class="nav-link admin-only hidden" id="adminLink" href="admin.html">Back to Admin</a>
+        <button class="nav-button" id="logoutButton" type="button">Log Out</button>
+      </nav>
+    </header>
+
+    <main class="view active" aria-labelledby="bookTitle">
+      <div class="book-view-header">
+        <div>
+          <p class="section-kicker">Selected book</p>
+          <h2 id="bookTitle">Book</h2>
+          <p class="book-subtitle" id="bookSubtitle"></p>
+        </div>
+        <div class="mode-switch" role="group" aria-label="Book mode">
+          <button class="nav-button active" id="readModeButton" type="button">Read</button>
+          <button class="nav-button" id="chatModeButton" type="button">Chat</button>
+        </div>
+      </div>
+
+      <div class="book-workspace">
+        <section class="panel reader-panel active" id="readerPanel" aria-labelledby="readerTitle">
+          <div class="reader-toolbar">
+            <h3 id="readerTitle">Reader</h3>
+            <div class="reader-controls">
+              <button class="secondary compact" id="previousPageButton" type="button">Previous</button>
+              <span class="page-indicator" id="pageIndicator">Page 1</span>
+              <button class="secondary compact" id="nextPageButton" type="button">Next</button>
+            </div>
+          </div>
+          <div class="status-line" id="readerStatus" role="status" aria-live="polite"></div>
+          <div class="pdf-stage">
+            <div class="pdf-spread" id="pdfSpread">
+              <canvas id="leftPdfCanvas"></canvas>
+              <canvas id="rightPdfCanvas"></canvas>
+            </div>
+            <div class="reader-text-spread" id="readerTextSpread">
+              <article class="reader-text-page" id="leftReaderText"></article>
+              <article class="reader-text-page" id="rightReaderText"></article>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel chat-panel" id="chatPanel" aria-labelledby="chatTitle">
+          <div class="section-heading chat-heading">
+            <div>
+              <p class="section-kicker">Ask this book</p>
+              <h3 id="chatTitle">AI Chat</h3>
+            </div>
+            <button class="secondary compact" id="clearChatButton" type="button">Clear</button>
+          </div>
+
+          <div class="chat-thread" id="chatThread" aria-live="polite">
+            <article class="chat-empty">
+              <p class="chat-empty-title">Ask from the pages, not the internet.</p>
+              <p class="chat-empty-copy">BookBot searches this selected book, answers only from matching passages, and shows evidence when it finds support.</p>
+              <div class="prompt-chips" aria-label="Suggested questions">
+                <button type="button" data-question="Summarize the main idea of this book.">Summarize</button>
+                <button type="button" data-question="What are the most important points in this book?">Key points</button>
+                <button type="button" data-question="What does this book say about the main topic?">Main topic</button>
+              </div>
+            </article>
+          </div>
+
+          <form class="chat-form" id="chatForm">
+            <div class="composer">
+              <textarea id="questionInput" rows="3" placeholder="Ask a question about this book"></textarea>
+              <div class="composer-meta">Enter to send. Shift + Enter for a new line.</div>
+            </div>
+            <button class="primary" id="askButton" type="submit">Ask</button>
+          </form>
+          <div class="status-line" id="chatStatus" role="status" aria-live="polite"></div>
+        </section>
+
+        <section class="panel evidence-panel" id="evidencePanel" aria-labelledby="evidenceTitle">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">Sources</p>
+              <h3 id="evidenceTitle">Evidence</h3>
+            </div>
+          </div>
+          <div class="empty-state" id="evidenceEmpty">Evidence appears after an answer.</div>
+          <div class="evidence-stack" id="evidenceStack"></div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/minisearch@7.1.0/dist/umd/index.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/pdf.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/answer.js"></script>
+  <script src="js/book.js"></script>
+</body>
+</html>
