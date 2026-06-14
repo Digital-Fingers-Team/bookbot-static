@@ -9,6 +9,7 @@
 
   async function initializeLibrary() {
     cacheElements();
+    readSearchFromUrl();
     bindEvents();
 
     currentUser = await window.BookAuth.requireAuth(["reader", "admin"]);
@@ -31,6 +32,18 @@
     elements.adminLink = document.getElementById("adminLink");
     elements.adminNavLink = document.getElementById("adminNavLink");
     elements.librarySearchInput = document.getElementById("librarySearchInput");
+  }
+
+  function readSearchFromUrl() {
+    if (!elements.librarySearchInput) {
+      return;
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const query = params.get("q");
+    if (query) {
+      elements.librarySearchInput.value = query;
+    }
   }
 
   function bindEvents() {
