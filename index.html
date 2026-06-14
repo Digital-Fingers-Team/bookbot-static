@@ -3,54 +3,106 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BookBot</title>
+  <title>BookBot Library</title>
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-  <main class="home-shell">
-    <section class="home-hero" aria-labelledby="homeTitle">
-      <div class="home-story">
-        <p class="eyebrow">BookBot</p>
-        <h1 id="homeTitle">A small library that can speak from its own books.</h1>
-        <p class="home-copy">Upload a PDF, open it like a normal reader, then ask questions as if the book is sitting across the table with its pages open.</p>
-        <div class="home-actions">
-          <a class="primary-link" href="login.html">Log In</a>
-          <a class="secondary-link" href="signup.html">Sign Up</a>
+<body class="arado-page">
+  <header class="arado-site-header">
+    <div class="arado-top-strip">
+      <div class="arado-container arado-strip-links">
+        <a href="signup.html">Sign Up</a>
+        <a href="login.html">Log In</a>
+      </div>
+    </div>
+
+    <div class="arado-brand-row">
+      <div class="arado-container arado-brand-content">
+        <form class="arado-search" action="library.html" aria-label="Search library">
+          <button class="arado-search-button" type="submit" aria-label="Search"></button>
+          <input name="q" type="search" placeholder="Search the library">
+        </form>
+
+        <a class="arado-brand" href="index.html" aria-label="BookBot home">
+          <span class="arado-brand-copy">
+            <strong>BookBot Library</strong>
+            <small>Client-side digital books and grounded AI answers</small>
+          </span>
+          <span class="arado-logo-mark" aria-hidden="true">BB</span>
+        </a>
+      </div>
+    </div>
+
+    <nav class="arado-nav-bar" aria-label="Main navigation">
+      <div class="arado-container arado-nav-content">
+        <a class="arado-home-tile" href="index.html" aria-label="Home"></a>
+        <a href="library.html">Search Books</a>
+        <a href="login.html">Reader Login</a>
+        <a href="signup.html">New Account</a>
+        <a href="login.html">Admin Uploads</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="arado-hero" aria-labelledby="homeTitle">
+      <div class="arado-container arado-hero-inner">
+        <div class="arado-hero-text">
+          <p class="arado-hero-kicker">Digital Library</p>
+          <h1 id="homeTitle">BookBot Knowledge Library</h1>
+          <p>Read uploaded books, explore the library, and ask each selected book questions with answers grounded in its own pages.</p>
+          <div class="arado-hero-actions">
+            <a class="arado-cta" href="login.html">Log In</a>
+            <a class="arado-cta secondary" href="signup.html">Sign Up</a>
+          </div>
+        </div>
+
+        <div class="arado-book-showcase" aria-hidden="true">
+          <span class="showcase-book yellow"></span>
+          <span class="showcase-book white"></span>
+          <span class="showcase-book blue"></span>
+          <span class="showcase-book black"></span>
+          <span class="showcase-book pencil"></span>
         </div>
       </div>
+    </section>
 
-      <aside class="conversation-preview" aria-label="BookBot conversation preview">
-        <div class="preview-header">
-          <span class="preview-dot"></span>
-          <span>BookBot is ready</span>
+    <section class="arado-main arado-intro" aria-labelledby="introTitle">
+      <h2 id="introTitle">About the Library</h2>
+      <p>
+        BookBot is a simple browser-based eBook platform. Admins upload PDF books, readers browse the collection, open a book in a two-page reader, and ask questions that are answered only from the selected book with supporting evidence.
+      </p>
+    </section>
+
+    <section class="arado-main arado-home-grid" aria-label="Library highlights">
+      <article class="arado-section-card">
+        <div class="arado-section-bar">
+          <span>Recently Added</span>
+          <span class="arado-section-icon books" aria-hidden="true"></span>
         </div>
-        <div class="bubble user-bubble">What does this chapter say about habit formation?</div>
-        <div class="bubble bot-bubble">The selected book explains that repeated actions become easier when they are tied to a clear cue and repeated in the same context.</div>
-        <div class="evidence-chip">Source: Uploaded book, page 12</div>
+        <div class="arado-feature-book">
+          <div class="arado-mini-cover"></div>
+          <div>
+            <h3>Start from the shelf</h3>
+            <p>Open the public library to see every uploaded PDF as a book card with its first page as the cover.</p>
+            <a href="library.html">Browse Library</a>
+          </div>
+        </div>
+      </article>
+
+      <aside class="arado-section-card">
+        <div class="arado-section-bar">
+          <span>Library Services</span>
+          <span class="arado-section-icon open-book" aria-hidden="true"></span>
+        </div>
+        <ul class="arado-category-list">
+          <li>Reader accounts</li>
+          <li>Admin PDF uploads</li>
+          <li>Two-page book reader</li>
+          <li>AI chat with citations</li>
+          <li>Local IndexedDB storage</li>
+        </ul>
       </aside>
     </section>
-
-    <section class="home-details" aria-label="BookBot details">
-      <article class="detail-card">
-        <p class="detail-label">For admins</p>
-        <h2>Build the shelf</h2>
-        <p>Upload the PDFs, let the browser extract text page by page, and keep the library stored locally with IndexedDB.</p>
-      </article>
-      <article class="detail-card">
-        <p class="detail-label">For readers</p>
-        <h2>Read first, ask next</h2>
-        <p>Browse the collection, open a book, move through pages, then switch into chat without losing the selected title.</p>
-      </article>
-      <article class="detail-card">
-        <p class="detail-label">For answers</p>
-        <h2>Ground every reply</h2>
-        <p>The assistant searches only the chosen book, returns concise answers, and shows the exact evidence behind them.</p>
-      </article>
-    </section>
-
-    <section class="home-quote" aria-label="BookBot tone">
-      <p>BookBot does not guess from the internet. It listens to the uploaded pages, pulls the strongest matching passages, and answers with the source still attached.</p>
-    </section>
-</main>
+  </main>
 </body>
 </html>

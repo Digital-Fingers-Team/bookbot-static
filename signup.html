@@ -6,9 +6,43 @@
   <title>Sign Up - BookBot</title>
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-  <main class="auth-shell">
-    <section class="auth-card" aria-labelledby="signupTitle">
+<body class="arado-page arado-auth-page">
+  <header class="arado-site-header">
+    <div class="arado-top-strip">
+      <div class="arado-container arado-strip-links">
+        <a href="signup.html">Sign Up</a>
+        <a href="login.html">Log In</a>
+      </div>
+    </div>
+
+    <div class="arado-brand-row">
+      <div class="arado-container arado-brand-content">
+        <div class="arado-search muted" aria-hidden="true">
+          <span class="arado-search-button"></span>
+          <span class="arado-search-placeholder">BookBot Library</span>
+        </div>
+
+        <a class="arado-brand" href="index.html" aria-label="BookBot home">
+          <span class="arado-brand-copy">
+            <strong>BookBot Library</strong>
+            <small>Create a reader account for the public library</small>
+          </span>
+          <span class="arado-logo-mark" aria-hidden="true">BB</span>
+        </a>
+      </div>
+    </div>
+
+    <nav class="arado-nav-bar" aria-label="Main navigation">
+      <div class="arado-container arado-nav-content">
+        <a class="arado-home-tile" href="index.html" aria-label="Home"></a>
+        <a href="library.html">Search Books</a>
+        <a href="login.html">Reader Login</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="arado-auth-shell">
+    <section class="auth-card arado-auth-card" aria-labelledby="signupTitle">
       <p class="eyebrow">BookBot</p>
       <h1 id="signupTitle">Sign up</h1>
       <form class="auth-form" id="signupForm">

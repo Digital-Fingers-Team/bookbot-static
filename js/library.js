@@ -2,6 +2,7 @@
   "use strict";
 
   let currentUser = null;
+  let allBooks = [];
   const elements = {};
 
   document.addEventListener("DOMContentLoaded", initializeLibrary);
@@ -16,6 +17,9 @@
     }
 
     elements.adminLink.classList.toggle("hidden", currentUser.role !== "admin");
+    if (elements.adminNavLink) {
+      elements.adminNavLink.classList.toggle("hidden", currentUser.role !== "admin");
+    }
     await renderLibrary();
   }
 
@@ -25,10 +29,16 @@
     elements.libraryEmpty = document.getElementById("libraryEmpty");
     elements.logoutButton = document.getElementById("logoutButton");
     elements.adminLink = document.getElementById("adminLink");
+    elements.adminNavLink = document.getElementById("adminNavLink");
+    elements.librarySearchInput = document.getElementById("librarySearchInput");
   }
 
   function bindEvents() {
     elements.logoutButton.addEventListener("click", window.BookAuth.logOutUser);
+    if (elements.librarySearchInput) {
+      elements.librarySearchInput.addEventListener("input", renderFilteredBooks);
+    }
+
     elements.libraryGrid.addEventListener("click", (event) => {
       const card = event.target.closest("[data-open-book]");
       if (card) {
@@ -50,9 +60,18 @@
   }
 
   async function renderLibrary() {
-    const books = await window.BookBotDB.getBooks();
+    allBooks = await window.BookBotDB.getBooks();
+    renderFilteredBooks();
+  }
+
+  function renderFilteredBooks() {
+    const searchTerm = elements.librarySearchInput ? elements.librarySearchInput.value.trim().toLowerCase() : "";
+    const books = searchTerm
+      ? allBooks.filter((book) => String(book.bookName || "").toLowerCase().includes(searchTerm))
+      : allBooks;
 
     elements.bookCount.textContent = formatBookCount(books.length);
+    elements.libraryEmpty.textContent = allBooks.length === 0 ? "No books are available yet." : "No books match your search.";
     elements.libraryEmpty.classList.toggle("hidden", books.length > 0);
     elements.libraryGrid.innerHTML = "";
 

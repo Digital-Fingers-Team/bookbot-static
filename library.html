@@ -6,31 +6,53 @@
   <title>Library - BookBot</title>
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-  <div class="app-shell">
-    <header class="topbar">
-      <div>
-        <p class="eyebrow">User library</p>
-        <h1>BookBot Library</h1>
+<body class="arado-page arado-library-page">
+  <header class="arado-site-header">
+    <div class="arado-top-strip">
+      <div class="arado-container arado-strip-links">
+        <a class="admin-only hidden" id="adminLink" href="admin.html">Back to Admin</a>
+        <button class="arado-text-button" id="logoutButton" type="button">Log Out</button>
       </div>
-      <nav class="nav-actions" aria-label="Library navigation">
-        <a class="nav-link admin-only hidden" id="adminLink" href="admin.html">Back to Admin</a>
-        <button class="nav-button" id="logoutButton" type="button">Log Out</button>
-      </nav>
-    </header>
+    </div>
 
-    <main class="view active" aria-labelledby="libraryTitle">
-      <div class="view-heading">
-        <div>
-          <p class="section-kicker">Browse</p>
-          <h2 id="libraryTitle">Available Books</h2>
+    <div class="arado-brand-row">
+      <div class="arado-container arado-brand-content">
+        <div class="arado-search" aria-label="Filter library books">
+          <span class="arado-search-button" aria-hidden="true"></span>
+          <input id="librarySearchInput" type="search" placeholder="Search uploaded books">
         </div>
+
+        <a class="arado-brand" href="library.html" aria-label="BookBot library">
+          <span class="arado-brand-copy">
+            <strong>BookBot Library</strong>
+            <small>Browse uploaded books and open the reader</small>
+          </span>
+          <span class="arado-logo-mark" aria-hidden="true">BB</span>
+        </a>
+      </div>
+    </div>
+
+    <nav class="arado-nav-bar" aria-label="Library navigation">
+      <div class="arado-container arado-nav-content">
+        <a class="arado-home-tile" href="index.html" aria-label="Home"></a>
+        <a href="library.html">Search Books</a>
+        <a href="login.html">Reader Login</a>
+        <a class="admin-only hidden" id="adminNavLink" href="admin.html">Admin Uploads</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="arado-main" aria-labelledby="libraryTitle">
+    <section class="arado-library-shell">
+      <div class="arado-section-bar arado-wide-bar">
+        <span id="libraryTitle">Available Books</span>
         <span class="book-count" id="bookCount">0 books</span>
       </div>
+
       <div class="empty-state" id="libraryEmpty">No books are available yet.</div>
       <div class="library-grid" id="libraryGrid"></div>
-    </main>
-  </div>
+    </section>
+  </main>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <script src="js/db.js"></script>
